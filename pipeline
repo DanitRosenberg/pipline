@@ -3,14 +3,17 @@ pipeline {
 
     stages {
         stage ('git'){
+            agent { label 'rhel-slave'}
             steps {
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
+                    sh 'npm install'
             }
         }
         
         stage ('build'){
+        agent { label 'rhel-slave'}
             steps {
-                sh 'npm install'
+                echo "bla"
             }
         }
     }
