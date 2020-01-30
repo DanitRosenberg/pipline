@@ -8,15 +8,16 @@ pipeline {
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
                     sh '''
                     ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip my-nodeJS-2artifact.zip
+                    ls -ltrh
                     '''
-                    sh 'ls -ltrh'
+                    
             }
         }
         
-        stage ('build'){
+        stage ('clean workspace'){
         agent { label 'rhel-slave'}
             steps {
-                echo "bla"
+                cleanWs()
             }
         }
     }
