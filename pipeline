@@ -1,7 +1,5 @@
 pipeline {
     agent any
-    environment {
-    }
     stages {
         stage ('git'){
             steps {
@@ -10,6 +8,9 @@ pipeline {
         }
     }
     post {
+        failure{
+            echo "**error**"
+        }
 
     }
 }
