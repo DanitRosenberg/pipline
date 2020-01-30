@@ -6,6 +6,13 @@ pipeline {
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
             }
         }
+        
+        stage ('build'){
+            steps {
+                sh 'npm install'
+                sh 'npm test'
+            }
+        }
     }
     post {
         failure{
