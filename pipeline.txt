@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    environment {
+    }
+    stages {
+        stage ('git'){
+            steps {
+                checkout([
+            	git branch: 'master',
+                credentialsId: 'bla',
+                url: 'ssh://git@https://github.com/DanitRosenberg/first.git'
+            	sh "ls -lat"
+            }
+        }
+    }
+    post {
+
+        }
+    }
+}
