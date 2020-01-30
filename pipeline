@@ -6,7 +6,7 @@ pipeline {
             agent { label 'rhel-slave'}
             steps {
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
-                    sh 'll |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip my-nodeJS-2artifact.zip'
+                    sh 'ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip my-nodeJS-2artifact.zip'
                     sh 'ls -ltrh'
             }
         }
