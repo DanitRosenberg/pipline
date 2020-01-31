@@ -31,8 +31,8 @@ pipeline {
                     protocol: NEXUS_PROTOCOL,
                     nexusUrl: NEXUS_URL,
                     groupId: NEXUS_CREDENTIAL_ID,
-                    version: nodeJS,
-                    repository: 'RepositoryName',
+                    version: '1.2.3',
+                    repository: NEXUS_REPOSITORY,
                     credentialsId: 'CredentialsId',
                     artifacts: [
                         [artifactId: nodeJS,
