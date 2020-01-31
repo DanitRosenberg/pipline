@@ -8,7 +8,7 @@ pipeline {
         // Where your Nexus is running
         NEXUS_URL = "192.168.1.18:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "maven-central"
+        NEXUS_REPOSITORY = "maven-releases"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
     }
@@ -30,12 +30,12 @@ pipeline {
                     nexusVersion: NEXUS_VERSION,
                     protocol: NEXUS_PROTOCOL,
                     nexusUrl: NEXUS_URL,
-                    groupId: NEXUS_CREDENTIAL_ID,
-                    version: '1.2.3',
+                    groupId: 'COM,
+                    version: 'nodeJS',
                     repository: NEXUS_REPOSITORY,
-                    credentialsId: 'CredentialsId',
+                    credentialsId: NEXUS_CREDENTIAL_ID,
                     artifacts: [
-                        [artifactId: nodeJS,
+                        [artifactId: 'FE',
                         classifier: '',
                         file: myNodeJSfile.zip,
                         type: 'zip']
