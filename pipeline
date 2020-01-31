@@ -30,12 +30,12 @@ pipeline {
                     nexusVersion: NEXUS_VERSION,
                     protocol: NEXUS_PROTOCOL,
                     nexusUrl: NEXUS_URL,
-                    groupId: 'COM',
-                    version: 'nodeJS',
+                    groupId: 'COM.FE',
+                    version: 'nodeJS-1234',
                     repository: NEXUS_REPOSITORY,
                     credentialsId: NEXUS_CREDENTIAL_ID,
                     artifacts: [
-                        [artifactId: 'FE',
+                        [artifactId: 'nodeJS',
                         classifier: '',
                         file: 'myNodeJS.zip',
                         type: 'zip']
