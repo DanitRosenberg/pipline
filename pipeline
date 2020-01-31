@@ -1,6 +1,17 @@
 pipeline {
     agent any
-
+    environment {
+        // This can be nexus3 or nexus2
+        NEXUS_VERSION = "nexus3"
+        // This can be http or https
+        NEXUS_PROTOCOL = "http"
+        // Where your Nexus is running
+        NEXUS_URL = "192.168.1.18:8081"
+        // Repository where we will upload the artifact
+        NEXUS_REPOSITORY = "maven-central"
+        // Jenkins credential id to authenticate to Nexus OSS
+        NEXUS_CREDENTIAL_ID = "nexus-credentials"
+    }
     stages {
         stage ('git'){
             agent { label 'rhel-slave'}
@@ -16,7 +27,23 @@ pipeline {
         stage ('upload to nexus'){
         agent { label 'rhel-slave'}
             steps {
-                
+                  nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: nodeJS,
+                            version: nodeJS,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                // Artifact generated such as .jar, .ear and .war files.
+                                [artifactId: nodeJS-${BUILD_NUMBER}-build,
+                                classifier: '',
+                                file: my-nodeJS-2artifact.zip,
+                                type: zip],
+                            ]
+                        );
+
             }
         }
         
