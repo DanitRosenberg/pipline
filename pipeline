@@ -31,7 +31,7 @@ pipeline {
                     '''        
             }
         }
-        stage ('upload to nexus'){
+        stage ('Upload to Nexus'){
         agent { label 'rhel-slave'}
             steps {
                 nexusArtifactUploader(
@@ -57,7 +57,7 @@ pipeline {
                 sh "curl -o myNodeJS.zip ${ARTIFACT_DOWNLOAD_URL}"
                 script{
                     try{
-                        sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
+                        sh "sudo mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
                     catch (Exception e){
                         sh "sudo mkdir /nodeJS_version"
