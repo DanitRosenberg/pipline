@@ -38,7 +38,7 @@ pipeline {
                                 // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: nodeJS-${BUILD_NUMBER}-build,
                                 classifier: '',
-                                file: myNodeJSfile.zip,
+                                file: /var/jenkins/workspace/nodeJS-from-Github/myNodeJSfile.zip,
                                 type: zip]
                         );
             }
