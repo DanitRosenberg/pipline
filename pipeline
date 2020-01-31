@@ -18,7 +18,7 @@ pipeline {
             steps {
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
                     sh '''
-                    ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip my-nodeJS-2nexus.zip
+                    ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip myNodeJS.zip
                     ls -ltrh
                     '''
                     
@@ -39,7 +39,7 @@ pipeline {
                                 // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: nodeJS-${BUILD_NUMBER}-build,
                                 classifier: '',
-                                file: my-nodeJS-2nexus.zip,
+                                file: myNodeJS.zip,
                                 type: zip]
                         );
 
