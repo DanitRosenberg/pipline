@@ -53,7 +53,7 @@ pipeline {
                         sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
                     catch (Exception e){
-                        sh "mkdir /nodeJS_version"
+                        sh "sudo mkdir /nodeJS_version"
                         sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
                 }
