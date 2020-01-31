@@ -30,7 +30,7 @@ pipeline {
                     nexusVersion: NEXUS_VERSION,
                     protocol: NEXUS_PROTOCOL,
                     nexusUrl: NEXUS_URL,
-                    groupId: nexus-credentials,
+                    groupId: NEXUS_CREDENTIAL_ID,
                     version: nodeJS,
                     repository: 'RepositoryName',
                     credentialsId: 'CredentialsId',
