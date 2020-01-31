@@ -35,13 +35,12 @@ pipeline {
                             version: nodeJS,
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
-                            artifacts: [
+                            artifacts: 
                                 // Artifact generated such as .jar, .ear and .war files.
                                 [artifactId: nodeJS-${BUILD_NUMBER}-build,
                                 classifier: '',
                                 file: my-nodeJS-2artifact.zip,
-                                type: zip],
-                            ]
+                                type: zip]
                         );
 
             }
