@@ -13,6 +13,12 @@ pipeline {
                     
             }
         }
+        stage ('upload to nexus'){
+        agent { label 'rhel-slave'}
+            steps {
+                
+            }
+        }
         
         stage ('clean workspace'){
         agent { label 'rhel-slave'}
