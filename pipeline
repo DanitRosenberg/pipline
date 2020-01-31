@@ -31,7 +31,7 @@ pipeline {
                     protocol: NEXUS_PROTOCOL,
                     nexusUrl: NEXUS_URL,
                     groupId: 'COM.FE',
-                    version: 'nodeJS-1234',
+                    version: 'nodeJS-4567',
                     repository: NEXUS_REPOSITORY,
                     credentialsId: NEXUS_CREDENTIAL_ID,
                     artifacts: [
