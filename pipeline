@@ -14,7 +14,7 @@ pipeline {
         ARTIFACT_DOWNLOAD_URL="${NEXUS_URL}/repository/NEXUS_REPOSITORY/COM/FE/nodeJS/nodeJS-${BUILD_NUMBER}"
     }
     stages {
-        stage ('git'){
+        stage ('Pull from github'){
             agent { label 'rhel-slave'}
             steps {
                     checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
@@ -52,7 +52,7 @@ pipeline {
                     try{
                         sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
-                    catch{
+                    catch (Exception e){
                         sh "mkdir "/nodeJS_version"
                         sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
