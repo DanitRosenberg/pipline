@@ -26,21 +26,7 @@ pipeline {
         stage ('upload to nexus'){
         agent { label 'rhel-slave'}
             steps {
-                  nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
-                            groupId: nodeJS,
-                            version: nodeJS,
-                            repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
-                            artifacts: 
-                                // Artifact generated such as .jar, .ear and .war files.
-                                [artifactId: nodeJS-${BUILD_NUMBER}-build,
-                                classifier: '',
-                                file: myNodeJSfile.zip,
-                                type: zip]
-                        );
+                    echo "upload to nexus"
             }
         }
         stage ('clean workspace'){
