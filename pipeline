@@ -11,6 +11,7 @@ pipeline {
         NEXUS_REPOSITORY = "maven-releases"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
+        ARTIFACT_DOWNLOAD_URL="${NEXUS_URL}/repository/NEXUS_REPOSITORY/COM/FE/nodeJS/nodeJS-${BUILD_NUMBER}"
     }
     stages {
         stage ('git'){
@@ -43,6 +44,14 @@ pipeline {
                 )
             }
         }
+        stage ('Download from nexus'){
+        agent { label 'rhel-slave'}
+            steps {
+                sh "curl -o myNodeJS.zip ${ARTIFACT_DOWNLOAD_URL}"
+            }
+        }
+        
+        
         stage ('clean workspace'){
         agent { label 'rhel-slave'}
             steps {
