@@ -48,7 +48,16 @@ pipeline {
         agent { label 'rhel-slave'}
             steps {
                 sh "curl -o myNodeJS.zip ${ARTIFACT_DOWNLOAD_URL}"
-                sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
+                script{
+                    try{
+                        sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
+                    }
+                    catch{
+                        sh "mkdir "/nodeJS_version"
+                        sh "mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
+                    }
+                }
+                
             }
         }
         
