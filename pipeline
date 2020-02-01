@@ -13,7 +13,7 @@ pipeline {
         EMAIL_TO="danitrosenber@gmail.com"
     }
     stages {
-        stage ('Clean workspace - part 1'){
+        stage ('Clean workspace'){
         agent { label 'rhel-slave'}
             steps {
                 cleanWs()
@@ -66,7 +66,7 @@ pipeline {
                 
             }
         }
-        stage ('Clean workspace - part 2'){
+        stage ('Clean workspace'){
         agent { label 'rhel-slave'}
             steps {
                 cleanWs()
