@@ -22,6 +22,15 @@ pipeline {
         stage ('Pull from github'){
             agent { label 'rhel-slave'}
             steps {
+                    scm {
+                        git {
+                            remote {
+                                github('danitrosenberg/first')
+                                refspec('+refs/pull/*:refs/remotes/origin/pr/*')
+                            }
+                            branch('DEV')
+                        }
+                    }
                     checkout([$class: 'GitSCM', branches: [[name: '*/DEV']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
                     sh '''
                     ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip myNodeJS.zip
