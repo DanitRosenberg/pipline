@@ -9,7 +9,7 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
         ARTIFACT_DOWNLOAD_URL="${NEXUS_URL}/repository/NEXUS_REPOSITORY/COM/FE/nodeJS/nodeJS-${BUILD_NUMBER}"
 
-        //Email address for 
+        //Email address 
         EMAIL_TO="danitrosenber@gmail.com"
     }
     stages {
