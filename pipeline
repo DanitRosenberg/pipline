@@ -1,17 +1,15 @@
 pipeline {
     agent any
     environment {
-        // This can be nexus3 or nexus2
+        //Nexus configuration details
         NEXUS_VERSION = "nexus3"
-        // This can be http or https
         NEXUS_PROTOCOL = "http"
-        // Where your Nexus is running
         NEXUS_URL = "ec2-3-133-58-51.us-east-2.compute.amazonaws.com:8081"
-        // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "maven-releases"
-        // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-credentials"
         ARTIFACT_DOWNLOAD_URL="${NEXUS_URL}/repository/NEXUS_REPOSITORY/COM/FE/nodeJS/nodeJS-${BUILD_NUMBER}"
+
+        //Email address for 
         EMAIL_TO="danitrosenber@gmail.com"
     }
     stages {
