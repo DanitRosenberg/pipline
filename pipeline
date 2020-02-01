@@ -22,7 +22,7 @@ pipeline {
         stage ('Pull from github'){
             agent { label 'rhel-slave'}
             steps {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/DEV']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
                     sh '''
                     ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip myNodeJS.zip
                     ls -ltrh
