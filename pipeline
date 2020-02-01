@@ -29,7 +29,7 @@ pipeline {
                     '''        
             }
         }
-        stage ('Upload to Nexus'){
+        stage ('Upload the zip into Nexus'){
         agent { label 'rhel-slave'}
             steps {
                 nexusArtifactUploader(
@@ -49,7 +49,7 @@ pipeline {
                 )
             }
         }
-        stage ('Download from nexus'){
+        stage ('Download the artifact from nexus'){
         agent { label 'rhel-slave'}
             steps {
                 sh "curl -o myNodeJS.zip ${ARTIFACT_DOWNLOAD_URL}"
@@ -58,6 +58,7 @@ pipeline {
                         sh "sudo mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
                     catch (Exception e){
+                        echo "The **nodeJS_version** folder doesn't exist. The folder will be created."  
                         sh "sudo mkdir /nodeJS_version"
                         sh "sudo mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
                     }
