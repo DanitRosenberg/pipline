@@ -24,10 +24,10 @@ pipeline {
             steps {
                     scm (
                         git (
-                            remote [
+                            remote (
                                 github('danitrosenberg/first')
                                 refspec('+refs/pull/*:refs/remotes/origin/pr/*')
-                            ]
+                            )
                             branch('DEV')
                         )
                     )
