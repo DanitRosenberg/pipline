@@ -26,7 +26,6 @@ pipeline {
                     sh '''
                     npm install
                     ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip myNodeJS.zip
-                    ls -ltrh
                     '''        
             }
         }
