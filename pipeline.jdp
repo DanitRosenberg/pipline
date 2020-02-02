@@ -1,0 +1,85 @@
+pipeline {
+    agent any
+    environment {
+        //Nexus configuration details
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "ec2-3-133-58-51.us-east-2.compute.amazonaws.com:8081"
+        NEXUS_REPOSITORY = "maven-releases"
+        NEXUS_CREDENTIAL_ID = "nexus-credentials"
+        ARTIFACT_DOWNLOAD_URL="${NEXUS_URL}/repository/NEXUS_REPOSITORY/COM/FE/nodeJS/nodeJS-${BUILD_NUMBER}"
+
+        //Email address 
+        EMAIL_TO="danitrosenber@gmail.com"
+    }
+    stages {
+        stage ('Clean workspace - START'){
+        agent { label 'rhel-slave'}
+            steps {
+                cleanWs()
+            }
+        }
+        stage ('Pull from github'){
+            agent { label 'rhel-slave'}
+            steps {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: 'https://github.com/DanitRosenberg/first.git']]])
+                    sh '''
+                    npm install
+                    ls -l |grep -v total | awk '{print$9}' | grep -v pipeline  | xargs zip myNodeJS.zip
+                    '''        
+            }
+        }
+        stage ('Upload the zip into Nexus'){
+        agent { label 'rhel-slave'}
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: NEXUS_VERSION,
+                    protocol: NEXUS_PROTOCOL,
+                    nexusUrl: NEXUS_URL,
+                    groupId: 'COM.FE',
+                    version: 'nodeJS-${BUILD_NUMBER}',
+                    repository: NEXUS_REPOSITORY,
+                    credentialsId: NEXUS_CREDENTIAL_ID,
+                    artifacts: [
+                        [artifactId: 'nodeJS',
+                        classifier: '',
+                        file: 'myNodeJS.zip',
+                        type: 'zip']
+                    ]
+                )
+            }
+        }
+        stage ('Download the artifact from nexus'){
+        agent { label 'rhel-slave'}
+            steps {
+                sh "curl -o myNodeJS.zip ${ARTIFACT_DOWNLOAD_URL}"
+                script{
+                    try{
+                        sh "sudo mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
+                    }
+                    catch (Exception e){
+                        echo "The **nodeJS_version** folder doesn't exist. The folder will be created."  
+                        sh "sudo mkdir /nodeJS_version"
+                        sh "sudo mv myNodeJS.zip /nodeJS_version/myNodeJS_last_version.zip"
+                    }
+                }
+                
+            }
+        }
+        stage ('Clean workspace - END'){
+        agent { label 'rhel-slave'}
+            steps {
+                cleanWs()
+            }
+        }
+    }
+    post {
+        failure{
+                emailext body: 'Check console output at $BUILD_URL to view the results.',
+                        to: "${EMAIL_TO}", 
+                        subject: 'Build failed in Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
+
+        }
+
+    }
+}
